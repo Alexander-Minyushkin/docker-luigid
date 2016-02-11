@@ -9,6 +9,8 @@ FROM python:3-onbuild
 #
 #ONBUILD COPY . /usr/src/app
 
+VOLUME /usr/src/app
+
 RUN mkdir /etc/luigi
 COPY client.cfg /etc/luigi/client.cfg
 # override the stock config by placing client.cfg in /usr/src/app/.
