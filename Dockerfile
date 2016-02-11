@@ -1,22 +1,19 @@
-FROM phusion/baseimage:0.9.16
+FROM python:3-onbuild
 
-CMD ["/sbin/my_init"]
-
-RUN apt-get update && \
-  apt-get install -y build-essential python python-dev python-pip
-
-ADD requirements.txt /tmp/requirements.txt
-RUN pip install -r /tmp/requirements.txt
+# onbuild does this:
+#RUN mkdir -p /usr/src/app
+#WORKDIR /usr/src/app
+#
+#ONBUILD COPY requirements.txt /usr/src/app/
+#ONBUILD RUN pip install --no-cache-dir -r requirements.txt
+#
+#ONBUILD COPY . /usr/src/app
 
 RUN mkdir /etc/luigi
-ADD client.cfg /etc/luigi/client.cfg
+COPY client.cfg /etc/luigi/client.cfg
+# override the stock config by placing client.cfg in /usr/src/app/.
 
-RUN mkdir /var/log/luigid
-ADD logrotate.cfg /etc/logrotate.d/luigid
-VOLUME /var/log/luigid
-
-RUN mkdir /etc/service/luigid
-ADD luigid.sh /etc/service/luigid/run
 EXPOSE 8082
+WORKDIR /usr/src/app/
 
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+CMD /usr/local/bin/luigid
