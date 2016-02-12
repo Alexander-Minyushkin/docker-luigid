@@ -9,7 +9,7 @@ FROM python:3-alpine
 #
 #ONBUILD COPY . /usr/src/app
 
-RUN apk update && apk add libpq postgresql-client # postgres for python psycopg2 support
+RUN apk update && apk add postgresql-dev # postgres for python psycopg2 support
 
 #VOLUME /usr/src/app
 WORKDIR /usr/src/app
