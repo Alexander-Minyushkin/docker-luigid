@@ -9,7 +9,7 @@ FROM python:3-alpine
 #
 #ONBUILD COPY . /usr/src/app
 
-RUN apk add libpq # postgres lib
+RUN apk update && apk add libpq # postgres lib
 
 #VOLUME /usr/src/app
 WORKDIR /usr/src/app
