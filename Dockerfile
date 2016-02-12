@@ -1,4 +1,4 @@
-FROM python:3-slim
+FROM python:3-alpine
 
 # onbuild does this:
 #RUN mkdir -p /usr/src/app
@@ -8,6 +8,8 @@ FROM python:3-slim
 #ONBUILD RUN pip install --no-cache-dir -r requirements.txt
 #
 #ONBUILD COPY . /usr/src/app
+
+RUN apk add libpq # postgres lib
 
 #VOLUME /usr/src/app
 WORKDIR /usr/src/app
