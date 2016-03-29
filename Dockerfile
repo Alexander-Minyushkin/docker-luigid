@@ -12,7 +12,7 @@ FROM python:3-slim
 
 RUN apt-get update && apt-get install -y libpq-dev gcc
 # need gcc to compile psycopg2
-RUN pip3 install psycopg2~=2.6
+RUN pip3 install psycopg2~=2.6 awscli
 RUN apt-get autoremove -y gcc
 
 # partial alpine dependencies
@@ -28,6 +28,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN mkdir /etc/luigi
 COPY client.cfg /etc/luigi/client.cfg
 # override the stock config by placing client.cfg in /usr/src/app/.
+
+ENV build_s3_bucket="BUCKET_NAME"
+ENV build_s3_key="BUCKET_KEY"
+CMD if ["BUCKET_NAME" != "$build_s3_bucket" ]; then echo "overriding from s3"; aws --region=us-east-1 s3 cp s3://${build_s3_bucket}/${build_s3_key} /etc/luigiclient.cfg; fi
 
 EXPOSE 8082
 WORKDIR /usr/src/app/
