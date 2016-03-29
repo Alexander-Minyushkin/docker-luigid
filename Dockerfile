@@ -27,10 +27,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 RUN mkdir /etc/luigi
 COPY client.cfg /etc/luigi/client.cfg
+COPY luigid.sh /usr/src/app/luigid.sh
 # override the stock config by placing client.cfg in /usr/src/app/.
 
 ENV luigi_config_s3_path="TODO"
 
 EXPOSE 8082
-WORKDIR /usr/src/app/
+VOLUME /usr/src/app/
 CMD echo "env: $luigi_config_s3_path" && if [ "$luigi_config_s3_path" != "TODO" ]; then echo "overriding from s3"; aws --region=us-east-1 s3 cp ${luigi_config_s3_path} /etc/luigi/client.cfg; fi && bash /usr/src/app/luigid.sh
