@@ -30,7 +30,7 @@ COPY client.cfg /etc/luigi/client.cfg
 # override the stock config by placing client.cfg in /usr/src/app/.
 
 ENV luigi_config_s3_path="TODO"
-CMD if ["$luigi_config_s3_path" != "TODO" ]; then echo "overriding from s3"; aws --region=us-east-1 s3 cp ${luigi_config_s3_path} /etc/luigiclient.cfg; fi
+CMD if ["$luigi_config_s3_path" != "TODO" ]; then echo "overriding from s3"; aws --region=us-east-1 s3 cp ${luigi_config_s3_path} /etc/luigi/client.cfg; fi
 
 EXPOSE 8082
 WORKDIR /usr/src/app/
