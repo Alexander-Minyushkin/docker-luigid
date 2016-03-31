@@ -34,4 +34,5 @@ ENV luigi_config_s3_path="TODO"
 
 EXPOSE 8082
 VOLUME /usr/src/app/
-CMD echo "env: $luigi_config_s3_path" && if [ "$luigi_config_s3_path" != "TODO" ]; then echo "overriding from s3"; aws --region=us-east-1 s3 cp ${luigi_config_s3_path} /etc/luigi/client.cfg; fi && bash /usr/src/app/luigid.sh
+CMD echo "env: $luigi_config_s3_path" && if [ "$luigi_config_s3_path" != "TODO" ]; then echo "overriding from s3"; aws --region=us-east-1 s3 cp ${luigi_config_s3_path} /etc/luigi/client.cfg; fi && /usr/local/bin/luigid >>/var/log/luigid.log 2>&1
+
