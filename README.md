@@ -4,7 +4,7 @@
 
 To run, publish luigi's default web port ( 8082 )
 
-    docker run -d -p 8082:8082 akursar/luigid
+    docker run -d -p 8082:8082 tedder42/docker-luigid
 
 And visit http://LUIGI_HOST:8082/
 
